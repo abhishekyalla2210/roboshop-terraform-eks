@@ -1,0 +1,31 @@
+pipeline {
+    agent {
+
+        label 'demo'
+
+    }
+
+    environment {
+        PROJECT_NAME = "Roboshop" 
+    }
+
+    stages {
+        stage(terraform practicing){
+            steps{
+                script{
+                    withAWS(region: 'us-east-1' ,credentials: 'aws-cred')
+                    sh '''
+                        cd 00-vpc
+
+                        'teraform init'
+                        'terraform plan'
+
+
+                     
+                    '''
+                }
+            }
+        }
+        
+            }
+}

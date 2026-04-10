@@ -1,0 +1,20 @@
+pipeline{
+    agent {
+
+        label 'demo'
+    }
+    stages {
+        stage (sg groupd) {
+            steps {
+                script {
+                        sh '''
+                        cd 20-sg-rules
+
+                        'terraform init'
+                        'terraform plan'
+                        '''
+                }
+            }
+        }
+    }
+}

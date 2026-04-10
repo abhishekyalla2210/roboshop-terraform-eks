@@ -1,0 +1,71 @@
+pipeline{
+    agent {
+
+        label 'demo'
+    }
+    stages {
+        stage ('sg groupd') {
+            steps {
+                script {
+                        sh '''
+                        cd 10-sg-groups
+
+                        terraform init
+                        terraform plan
+                        
+                       
+
+                    
+                        '''
+                }
+                when {
+                    ${params.deply = true}
+                }
+                script {
+                    '''
+                    terraform apply -auto-approve
+                    '''
+                }
+            }
+        }
+        stage ('parallel') {
+            parallel {
+                stage ('sg groups') {
+                    steps {
+                        build job: 'sg-groups'
+                            wait: true
+                            propogate: false
+                    }
+                }
+                 stage ('bastion') {
+                    steps {
+                        build job: 'sg-groups'
+                            wait: true
+                            propogate: false
+                    }
+                }
+                 stage ('eks') {
+                    steps {
+                        build job: 'sg-groups'
+                            wait: true
+                            propogate: false
+                    }
+                }
+                 stage ('sg groups') {
+                    steps {
+                        build job: 'sg-groups'
+                            wait: true
+                            propogate: false
+                    }
+                }
+            }
+        }
+
+
+    }
+    
+}
+       
+        
+                
+            

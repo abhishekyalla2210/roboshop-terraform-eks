@@ -1,0 +1,20 @@
+resource "aws_security_group" "main" {
+  count = length(var.sg_names)
+  name        = var.sg_names[count.index] 
+  description = var.sg_names[count.index]
+  vpc_id      = local.vpc_id
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags ={
+    Name = "${local.common_name}-${var.sg_names[count.index]}"
+  }
+    
+    
+    
+} 
