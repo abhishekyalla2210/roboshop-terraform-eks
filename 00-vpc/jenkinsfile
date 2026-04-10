@@ -18,9 +18,9 @@ pipeline {
                          cd 00-vpc
 
                         'teraform init'
-                        'terraform plan'
+                         'terraform plan'
 
-
+ 
                      
                     '''
                 }
